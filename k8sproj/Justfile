@@ -1,0 +1,13 @@
+_default:
+  @just --list
+
+# Build a new docker image 
+build:
+    ./build-push.sh
+
+cleanup:
+    kubectl -n mooc delete -f manifests/deployment.yaml 
+
+
+test:
+    docker run -it --name mooc rsarpal/k8s_k8sproj

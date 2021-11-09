@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8sproj-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8sproj
+  template:
+    metadata:
+      labels:
+        app: k8sproj
+    spec:
+      containers:
+      - name: k8sproj
+        image: rsarpal/k8s_k8sproj
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
+        readinessProbe:
+          periodSeconds: 5
+          successThreshold: 1
+          httpGet:
+            path: /
+            port: 8000
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values: ["k3d-k3s-default-agent-0"]
+

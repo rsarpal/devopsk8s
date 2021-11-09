@@ -1,0 +1,36 @@
+# https://hub.docker.com/_/python
+FROM python:3.7-slim
+
+# install pdfkit dependency - html to pdf converter https://wkhtmltopdf.org
+RUN apt-get update \
+  && apt-get upgrade -y
+  
+#RUN apt-get update && \
+#    apt-get -y install wkhtmltopdf
+
+# Copy local code to the container image.
+RUN mkdir /usr/Logoutput
+WORKDIR /usr/Logoutput
+
+COPY . /usr/Logoutput/
+
+# Install production dependencies.
+# https://pypi.org/project/pdfkit/
+#
+#RUN pip install flask pdfkit numpy flask_sqlalchemy flask_login
+
+# expose port 8080 for gcloud
+#EXPOSE 8080
+
+# set FLASK env variables
+#ENV FLASK_APP=app.py
+#ENV FLASK_RUN_PORT=8080
+
+# setup entrypoint
+#RUN chmod +x /usr/serverless/startup.sh
+#ENTRYPOINT ["/usr/serverless/startup.sh"]
+
+#CMD ["python3", "-u","logoutput.py",">>","log.txt","&"]
+
+RUN chmod +x /usr/Logoutput/startup.sh
+ENTRYPOINT ["/usr/Logoutput/startup.sh"]
