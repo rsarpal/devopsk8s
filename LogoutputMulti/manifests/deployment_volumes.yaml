@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logoutput-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logoutput
+  template:
+    metadata:
+      labels:
+        app: logoutput
+    spec:
+      volumes:
+      - name: logger-vol
+        emptyDir: {}
+      containers:
+      - name: logoutputwriter
+        image: rsarpal/k8s_logoutputwriter:latest
+        volumeMounts:
+          - name: logger-vol
+            mountPath: /usr/Logoutput/files
+        resources:
+          limits:
+            memory: "80Mi"
+            cpu: "100m"
+      - name: logoutput
+        image: rsarpal/k8s_logoutput:latest
+        volumeMounts:
+          - name: logger-vol
+            mountPath: /usr/Logoutput/files
+        resources:
+          limits:
+            memory: "80Mi"
+            cpu: "100m" #1000m is 1 CPU 
+        ports:
+        - containerPort: 8000
+        #readinessProbe:
+        #  periodSeconds: 5
+        #  successThreshold: 1
+        #  httpGet:
+        #    path: /
+        #    port: 8000

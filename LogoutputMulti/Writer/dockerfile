@@ -1,0 +1,18 @@
+# https://hub.docker.com/_/python
+FROM python:3.7-slim
+
+# install pdfkit dependency - html to pdf converter https://wkhtmltopdf.org
+RUN apt-get update \
+  && apt-get upgrade -y
+  
+
+# Copy local code to the container image.
+RUN mkdir /usr/Logoutput
+WORKDIR /usr/Logoutput
+
+COPY . /usr/Logoutput
+
+
+
+RUN chmod +x /usr/Logoutput/startup.sh
+ENTRYPOINT ["/usr/Logoutput/startup.sh"]
