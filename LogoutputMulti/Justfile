@@ -1,0 +1,14 @@
+_default:
+  @just --list
+
+# Build a new docker image 
+build:
+    ./build-push.sh
+
+
+cleanup:
+    kubectl -n mooc delete -f manifests/deployment.yaml 
+    kubectl delete --all pods --namespace=mooc
+
+test:
+    docker run -it --name mooc rsarpal/logoutput
