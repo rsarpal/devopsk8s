@@ -17,9 +17,6 @@ RUN pip3 install -r requirements.txt
 # expose port 8000 for Django
 EXPOSE 8000
 
-# set FLASK env variables
-#ENV FLASK_APP=app.py
-#ENV FLASK_RUN_PORT=8080
 
 # setup entrypoint
 RUN chmod +x /usr/k8sproj/startup.sh

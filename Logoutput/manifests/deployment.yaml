@@ -41,22 +41,3 @@ spec:
     protocol: TCP
     port: 4563
     targetPort: 8000
-
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: myingress
-  labels:
-    name: myingress
-spec:
-  rules:
-  - http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: logoutput-svc
-            port: 
-              number: 4563

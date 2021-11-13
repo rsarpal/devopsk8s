@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingpong-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingpong
+  template:
+    metadata:
+      labels:
+        app: pingpong
+    spec:
+      containers:
+      - name: pingpong
+        image: rsarpal/k8s_pingpong:latest
+        resources:
+          limits:
+            memory: "80Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 5000
+        #readinessProbe:
+        #  periodSeconds: 5
+        #  successThreshold: 1
+        #  httpGet:
+        #    path: /pingpong
+        #    port: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pingpong-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: pingpong
+  ports:
+  - name: http
+    protocol: TCP
+    port: 5563
+    targetPort: 5000
+
+
