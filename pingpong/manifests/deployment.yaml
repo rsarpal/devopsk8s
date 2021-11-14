@@ -12,9 +12,16 @@ spec:
       labels:
         app: pingpong
     spec:
+      volumes:
+        - name: shared-image
+          persistentVolumeClaim:
+            claimName: image-claim
       containers:
       - name: pingpong
         image: rsarpal/k8s_pingpong:latest
+        volumeMounts:
+          - name: shared-image
+            mountPath: /tmp/kube
         resources:
           limits:
             memory: "80Mi"

@@ -22,3 +22,10 @@ spec:
             name: logoutput-svc
             port: 
               number: 4563
+      - pathType: Prefix
+        path: /images
+        backend:
+          service:
+            name: images-svc
+            port: 
+              number: 2345
