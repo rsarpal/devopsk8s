@@ -12,9 +12,16 @@ spec:
       labels:
         app: logoutput
     spec:
+      volumes:
+        - name: shared-image
+          persistentVolumeClaim:
+            claimName: image-claim
       containers:
       - name: logoutput
         image: rsarpal/k8s_logoutput:latest
+        volumeMounts:
+          - name: shared-image
+            mountPath: /tmp/kube
         resources:
           limits:
             memory: "80Mi"
