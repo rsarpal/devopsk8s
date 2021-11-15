@@ -12,7 +12,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     with open("files/file.txt","r") as f:
       for i in f:
-        line= line + str(hash(f.readline())) + "\n"
+        line= line + f.readline() + "\n"
         print (line)
     return line
 
