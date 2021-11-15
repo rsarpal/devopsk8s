@@ -16,16 +16,23 @@ spec:
             port: 
               number: 5563
       - pathType: Prefix
-        path: "/"
+        path: "/logoutput"
         backend:
           service:
             name: logoutput-svc
             port: 
               number: 4563
       - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: k8sproj-svc
+            port: 
+              number: 2345   # This is a port that is specified in service
+      - pathType: Prefix
         path: /images
         backend:
           service:
             name: images-svc
             port: 
-              number: 2345
+              number: 2346

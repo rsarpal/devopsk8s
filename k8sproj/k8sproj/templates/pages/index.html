@@ -1,46 +1,88 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>Lemon Brothers Bank</title>
-    </head>
+
+<head>
+    <title>Create TODO</title>
+</head>
 
 
-    <body>
-		<h1>Lemon Brothers Bank</h1>
+<body>
+    <h1>Create TODO</h1>
+
+    <form action='add/' method="POST">
 
         <table>
-		<tr>
-		<th style="text-align:left">Username: <td>{{user.username}} 
-		</table>
+            <tr>
+                <td>
+                    {% load static %}
+                    <img src="{% static 'k8simage.jpg' %}" alt="My image">
+                     <!--img src="k8simage.jpg" alt="My image"-->
+                    <!--img src="/tmp/kube/k8simage.jpg"-->
+                </td>
+            </tr>
+            <tr>
+                <td> <input type="text" name="textBox" id="id_textBox"/></td>
+                <td> <input type="button" value="CreateToDo" onclick="validate()" /></td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    <ul id="id_list">
+                        <li>TODO 1 </li>
+                        <li>TODO 2 </li>
+                        <li>TODO 3 </li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <td><input type="submit" value="Send" /></td>
+            </tr>
+        </table>
+    </form>
+
+    <!--ul>
+        {% for a in accounts %}
+
+        <li>{{a.iban}}
+        </li>
+
+        {% endfor %}
+    </ul-->
 
 
-        <form action='logout/' method="POST">
-			{% csrf_token %}
-            <input type="submit" value="Logout"/>
-        </form>
-		
-        <h2>Your IBAN accounts</h2>
-
-		<ul>
-		{% for a in accounts %}
-
-		<li>{{a.iban}}
-		</li>
-
-		{% endfor %}
-		</ul>
+</body>
 
 
-        <h2>Create a new account</h2>
+<script type="text/javascript">
 
-        <form action='add/' method="POST">
-            {% csrf_token %}
+    function validate(){
+      var val = document.getElementById('id_textBox').value;
+      var ul = document.getElementById("id_list");
+      var pattern = /[^A-Za-z]/g;
+      var result = pattern.test(val)
+  
+      if (result==true){
+        alert("Invalid Input. Only Words are permitted");
+        return false;
+      }
+      else {
+  
+        var wordCount= val.length;
+  
+        if (wordCount>140){
+          alert("Invalid Input. Use maximum 140 letters");
+          return false;
+        }else {
+            var node = document.createElement("li");
+            node.innerHTML = val
+            ul.appendChild(node)
+        }
+        return true;
+      }
+  
+    }
+</script>
 
-			<input type="text" name="iban"/><br/>
-            <input type="submit" value="Send"/>
-        </form>
-    </body>
-
-
-    </body>
 </html>
