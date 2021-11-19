@@ -4,6 +4,7 @@ import datetime
 from time import sleep
 import os.path
 from http.server import HTTPServer, BaseHTTPRequestHandler 
+import requests
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler): 
 
@@ -16,11 +17,19 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     with open("/tmp/kube/ping.txt","r") as f:
        return(f.readline())
 
+  def fetchPing(self):
+    ping=requests.get("http://pingpong-svc:5563/pingpong")
+    return str(ping.text)
+
+
   def do_GET(self):
     self.send_response(200) 
     self.end_headers() 
-    line= f"<p>{datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')}  {str(uuid.uuid4())}</p></br>" + self.readFile()
+    #line= f"<p>{datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')}  {str(uuid.uuid4())}</p></br>" + self.readFile()
+    line= f"<p>{datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')}  {str(uuid.uuid4())}</p></br>" + self.fetchPing()
     self.wfile.write(line.encode("utf-8"))
+
+
 
 httpd = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
 httpd.serve_forever()
