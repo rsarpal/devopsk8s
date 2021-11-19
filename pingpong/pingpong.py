@@ -15,7 +15,7 @@ def create_app():
         global count
         count += 1
         #print (str(count))
-        writeFile(count)
+        #writeFile(count)
         return f"{count:d}"
 
 
