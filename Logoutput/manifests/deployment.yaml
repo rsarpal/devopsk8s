@@ -29,6 +29,15 @@ spec:
             cpu: "100m"
         ports:
         - containerPort: 8000
+        envFrom:
+        - configMapRef:
+           name: logoutput-configmap
+        # env:
+        #   - name: MESSAGE
+        #     valueFrom:
+        #       configMapKeyRef:
+        #         name: logoutput-configmap
+        #         key: message
         # readinessProbe:
         #   periodSeconds: 5
         #   successThreshold: 1
