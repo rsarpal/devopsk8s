@@ -3,10 +3,11 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: example-pv
+  namespace: project
 spec:
   storageClassName: manual
   capacity:
-    storage: 500Mi # Could be e.q. 500Gi. Small amount is to preserve space when testing locally
+    storage: 700Mi # Could be e.q. 500Gi. Small amount is to preserve space when testing locally
   volumeMode: Filesystem # This declares that it will be mounted into pods as a directory
   accessModes:
   - ReadWriteOnce
@@ -20,3 +21,26 @@ spec:
           operator: In
           values:
           - k3d-k3s-default-agent-0
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: example-pv
+#   namespace: logoutput
+# spec:
+#   storageClassName: manual
+#   capacity:
+#     storage: 500Mi # Could be e.q. 500Gi. Small amount is to preserve space when testing locally
+#   volumeMode: Filesystem # This declares that it will be mounted into pods as a directory
+#   accessModes:
+#   - ReadWriteOnce
+#   local:
+#     path: /tmp/kube
+#   nodeAffinity: ## This is only required for local, it defines which nodes can access it ( avoid using this in production.)
+#     required:
+#       nodeSelectorTerms:
+#       - matchExpressions:
+#         - key: kubernetes.io/hostname
+#           operator: In
+#           values:
+#           - k3d-k3s-default-agent-0
