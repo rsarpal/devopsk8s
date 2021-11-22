@@ -28,12 +28,12 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 8000
-        readinessProbe:
-          periodSeconds: 5
-          successThreshold: 1
-          httpGet:
-            path: /
-            port: 8000
+        # readinessProbe:
+        #   periodSeconds: 5
+        #   successThreshold: 1
+        #   httpGet:
+        #     path: /admin
+        #     port: 8000
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

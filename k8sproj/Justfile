@@ -6,8 +6,8 @@ build:
     ./build-push.sh
 
 cleanup:
-    kubectl -n mooc delete -f manifests/deployment.yaml 
+    kubectl delete -f manifests/deployment.yaml 
 
 
 test:
-    docker run -it --name mooc rsarpal/k8s_k8sproj
+    docker run -it rsarpal/k8s_k8sproj

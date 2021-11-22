@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8sfrontend-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8sfrontend
+  template:
+    metadata:
+      labels:
+        app: k8sfrontend
+    spec:
+      volumes:
+        - name: shared-image
+          persistentVolumeClaim:
+            claimName: image-claim
+      containers:
+      - name: k8sfrontend
+        image: rsarpal/k8s_k8sfrontend
+        volumeMounts:
+          - name: shared-image
+            mountPath: /tmp/kube
+        resources:
+          limits:
+            memory: "100Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          periodSeconds: 5
+          successThreshold: 1
+          httpGet:
+            path: /
+            port: 8080
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values: ["k3d-k3s-default-agent-0"]
+

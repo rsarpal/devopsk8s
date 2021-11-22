@@ -23,12 +23,19 @@ spec:
             port: 
               number: 4563
       - pathType: Prefix
-        path: "/"
+        path: "/graphql"
         backend:
           service:
             name: k8sproj-svc
             port: 
               number: 2345   # This is a port that is specified in service
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: k8sfrontend-svc
+            port: 
+              number: 3000   # This is a port that is specified in service
       - pathType: Prefix
         path: /images
         backend:

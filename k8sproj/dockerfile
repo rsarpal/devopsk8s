@@ -3,7 +3,8 @@ FROM python:3.7-slim
 
 RUN apt-get update \
   && apt-get upgrade -y \
-  && apt-get install -y sqlite3
+  && apt-get install -y sqlite3 \
+  && python3 -m pip install --upgrade pip
 
 # Copy local code to the container image.
 RUN mkdir /usr/k8sproj

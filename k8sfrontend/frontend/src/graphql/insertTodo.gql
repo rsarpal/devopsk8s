@@ -1,0 +1,7 @@
+mutation ($newTodo : String!)  {
+  addTodo(text: $newTodo) {
+    todo{
+      text
+    }
+  }
+}
