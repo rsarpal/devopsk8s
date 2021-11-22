@@ -1,9 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: myingress
+  name: logingress
+  namespace: logoutput
   labels:
-    name: myingress
+    name: logingress
 spec:
   rules:
   - http:
@@ -23,10 +24,30 @@ spec:
             port: 
               number: 4563
       - pathType: Prefix
+        path: /images
+        backend:
+          service:
+            name: images-svc
+            port: 
+              number: 2346
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: projingress
+  namespace: project
+  labels:
+    name: projingress
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
         path: "/graphql"
         backend:
           service:
             name: k8sproj-svc
+            namespace: project 
             port: 
               number: 2345   # This is a port that is specified in service
       - pathType: Prefix
@@ -34,12 +55,6 @@ spec:
         backend:
           service:
             name: k8sfrontend-svc
+            namespace: project 
             port: 
               number: 3000   # This is a port that is specified in service
-      - pathType: Prefix
-        path: /images
-        backend:
-          service:
-            name: images-svc
-            port: 
-              number: 2346

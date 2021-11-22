@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: k8sproj-svc
+  namespace: project
 spec:
   type: ClusterIP
   selector:
