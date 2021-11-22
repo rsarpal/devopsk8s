@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import requests
+from backend.models import ToDo
 
 counter=0
 
@@ -16,3 +17,15 @@ def homePageView(request):
 	  downloadImage()
 	counter =+ 1
 	return render(request, 'index.html')
+
+def todosList(request):
+
+	print("reached here")
+	if (request.method=='GET'):
+		allItems= ToDo.objects.all()
+		print(allItems)
+		return str(allItems)
+
+	elif (request.method =='POST'):
+		item = ToDo.objects.create(text=request.text)
+		return str("Items added")

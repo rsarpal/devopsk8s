@@ -1,0 +1,5 @@
+query ($count : Int!) {
+   allList (count: $count) {
+     text
+    }   
+}

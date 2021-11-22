@@ -1,0 +1,19 @@
+FROM node:current-slim
+
+#Copy local code to the container image.
+RUN mkdir /usr/k8sfrontend
+WORKDIR /usr/k8sfrontend
+
+COPY . /usr/k8sfrontend
+
+WORKDIR /usr/k8sfrontend/frontend
+
+RUN npm install
+
+WORKDIR /usr/k8sfrontend
+# expose port 8000 for Django
+EXPOSE 8080
+
+# setup entrypoint
+RUN chmod +x /usr/k8sfrontend/startup.sh
+ENTRYPOINT ["/usr/k8sfrontend/startup.sh"]
