@@ -46,8 +46,7 @@ spec:
         path: "/graphql"
         backend:
           service:
-            name: k8sproj-svc
-            namespace: project 
+            name: k8sproj-svc 
             port: 
               number: 2345   # This is a port that is specified in service
       - pathType: Prefix
@@ -55,6 +54,5 @@ spec:
         backend:
           service:
             name: k8sfrontend-svc
-            namespace: project 
             port: 
               number: 3000   # This is a port that is specified in service
