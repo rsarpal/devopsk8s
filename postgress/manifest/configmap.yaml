@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+  namespace: logoutput
+data:
+  POSTGRES_DB: counterdb
+  PGDATA: /data/pgdata
+

@@ -29,6 +29,11 @@ spec:
             cpu: "100m"
         ports:
         - containerPort: 5000
+        envFrom:
+        - secretRef:
+           name: postgres-secret
+        - configMapRef:
+           name: postgres-configmap
         #readinessProbe:
         #  periodSeconds: 5
         #  successThreshold: 1
