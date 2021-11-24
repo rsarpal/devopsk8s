@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: dailytodos-cron
+  namespace: project
+spec:
+  schedule: "0 06 * * *"
+  successfulJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          containers:
+          - name: curljob
+            image: curlimages/curl
+            imagePullPolicy: IfNotPresent
+            command:
+              - /bin/sh
+            args:
+                - "-c"
+                - >-
+                  url=`curl -Ls -o /dev/null -w %{url_effective} https://en.wikipedia.org/wiki/Special:Random` ;
+                  curl -v 'http://k8sproj-svc:2345/graphql' -X POST -H 'Accept: application/json' -H 'content-type: application/json' 
+                  --data-raw '{"query":"mutation {\n  addTodo(text: \"'${url}'\") {\n    todo {\n      text\n    }\n  }\n}\n","variables":null}' --compressed   
+          restartPolicy: OnFailure
