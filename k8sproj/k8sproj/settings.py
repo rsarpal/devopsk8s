@@ -78,10 +78,21 @@ WSGI_APPLICATION = 'k8sproj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv("POSTGRES_DB"),
+        'USER': 'postgres',
+        'PASSWORD': os.getenv("POSTGRES_PASSWORD", 0),
+        'HOST': 'postgres-db-svc',
+        'PORT': '5432',
     }
 }
 
