@@ -1,7 +1,9 @@
 import graphene
 from graphene_django import DjangoObjectType
+from graphql import GraphQLError
 from .models import ToDo
 import requests
+from .logger import backendLogger
 
 
 #datatype declaration of objnect to be stored in django database. Should follow defined types in Model 
@@ -22,10 +24,16 @@ class CreateTodo(graphene.Mutation):
 
     # mandatory mutate method needed.
     def mutate(root, info, **kwargs):
-        todo = ToDo(**kwargs)
-        todo.save()
+        length=len(kwargs.get('text'))
+        if length <140:
 
-        return CreateTodo(todo)
+            todo = ToDo(**kwargs)
+            todo.save()
+            backendLogger("Item Added to Todo List",0)
+            return CreateTodo(todo)
+        else:
+            backendLogger("Length Too Long",1)
+            raise GraphQLError("Length Should not exceed 140 Chars")
         
 
 # Mutation GraphQL
