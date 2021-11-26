@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-db-ss
+  #namespace: logoutput
+spec:
+  selector:
+    matchLabels:
+      app: postgres-db
+  serviceName: postgres-db-svc
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-db
+    spec:
+      containers:
+      - name: postgresdb
+        image: postgres:latest
+        volumeMounts:
+        - name: postgresql-db-disk
+          mountPath: /data
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - secretRef:
+           name: postgres-secret
+        - configMapRef:
+           name: postgres-configmap
+  volumeClaimTemplates:
+  - metadata:
+      name: postgresql-db-disk
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      # doesn't work in Gcloud
+      #storageClassName: local-path
+      resources:
+        requests:
+          storage: 200Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-db-svc
+spec:
+  selector:
+    app: postgres-db
+  ports:
+  - port: 5432
+    targetPort: 5432
+  clusterIP: None
+
