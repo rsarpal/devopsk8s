@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: logingress
+  #namespace: logoutput
+  labels:
+    name: logingress
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/pingpong"
+        backend:
+          service:
+            name: pingpong-svc
+            port: 
+              number: 5563
+      - pathType: Prefix
+        path: "/logoutput"
+        backend:
+          service:
+            name: logoutput-svc
+            port: 
+              number: 4563
