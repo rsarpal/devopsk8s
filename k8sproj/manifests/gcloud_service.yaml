@@ -1,0 +1,15 @@
+# NODEPORT SERVICE - REQUIRES INGRESS
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8sproj-svc
+  #namespace: logoutput
+spec:
+  type: NodePort
+  selector:
+    app: k8sproj
+  ports:
+  - name: http
+    protocol: TCP
+    port: 5563
+    targetPort: 5000

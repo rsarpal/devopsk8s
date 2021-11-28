@@ -1,6 +1,9 @@
 name: Release application
 on:
   push:
+      paths:
+      - 'Github/**'
+      - '.github/workflows/main.yml'
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
