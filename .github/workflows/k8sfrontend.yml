@@ -1,12 +1,17 @@
 name: Release application
 on:
   push:
+    branches: 
+      - master
+    paths:
+      - 'k8sfrontend/**'
+      - '.github/workflows/k8sfrontend.yml'
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-b
-  IMAGE: dwk-environments
+  IMAGE: rsarpal/k8s_k8sfrontend
 
 jobs:
   build-publish-deploy:
