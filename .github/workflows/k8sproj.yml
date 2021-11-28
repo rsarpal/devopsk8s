@@ -37,7 +37,7 @@ jobs:
     #Build out the desired image with a tag
     - name: Build
       run: |-
-        docker build --tag "gcr.io/$PROJECT_ID/$IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" .
+        docker build -f ../k8sproj/dockerfile --tag "gcr.io/$PROJECT_ID/$IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA" 
     # Publish the image
     - name: Publish
       run: |-
