@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: default
 resources:
 - manifest/deployment.yaml
-- manifest/service_clusterip.yaml
+- manifest/gcloud_service.yaml
 images:
 - name: PROJECT/IMAGE
   newName: rsarpal/k8s_k8sfrontend
