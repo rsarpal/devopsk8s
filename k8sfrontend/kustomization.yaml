@@ -4,6 +4,6 @@ namespace: default
 resources:
 - manifests/deployment.yaml
 - manifests/gcloud_service.yaml
-#images:
-#- name: gcr.io/PROJECT/IMAGE
-#  newName: rsarpal/k8s_k8sfrontend
+images:
+  - newName: rsarpal/k8s_k8sfrontend
+    name: PROJECT/IMAGE
