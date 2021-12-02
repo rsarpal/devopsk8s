@@ -11,7 +11,7 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-b
-  IMAGE: rsarpal/k8s_k8sproj
+  IMAGE: k8s_k8sproj
 
 jobs:
   build-publish-deploy:
@@ -53,8 +53,9 @@ jobs:
     - name: Deploy
       working-directory: k8sproj
       run: |-
-        kubectl config set-context --current --namespace=default
-        kustomize edit set image gcr.io/PROJECT_ID/IMAGE=gcr.io/$PROJECT_ID/$IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
-        kustomize build . | kubectl apply -f -
+        #kubectl config set-context --current --namespace=default
+        #kustomize edit set image gcr.io/PROJECT_ID/IMAGE=gcr.io/$PROJECT_ID/$IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
+        #kustomize build . | kubectl apply -f -
+        kubectl apply -k .
         kubectl rollout status deployment $IMAGE
         kubectl get services -o wide
