@@ -5,5 +5,5 @@ resources:
 - manifests/deployment.yaml
 - manifests/gcloud_service.yaml
 images:
-  - newName: rsarpal/k8s_k8sfrontend
+  - newName: k8s_k8sfrontend
     name: PROJECT/IMAGE
