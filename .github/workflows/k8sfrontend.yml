@@ -11,7 +11,7 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-b
-  IMAGE: rsarpal/k8s_k8sfrontend
+  IMAGE: k8s_k8sfrontend
 
 jobs:
   build-publish-deploy:

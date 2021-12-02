@@ -19,7 +19,8 @@ spec:
             claimName: image-claim
       containers:
       - name: k8sfrontend
-        image: rsarpal/k8s_k8sfrontend
+        #image: rsarpal/k8s_k8sfrontend
+        image: PROJECT/IMAGE
         volumeMounts:
           - name: shared-image
             mountPath: /tmp/kube
